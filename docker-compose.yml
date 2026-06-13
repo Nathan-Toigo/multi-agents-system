@@ -1,0 +1,57 @@
+services:
+
+  stock-service:
+    build: ./stock-service
+    container_name: stock-service
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./stock-service/data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  production-service:
+    build: ./production-service
+    container_name: production-service
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./production-service/data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./order-service/data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  machine-service:
+    build: ./machine-service
+    container_name: machine-service
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./machine-service/data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
