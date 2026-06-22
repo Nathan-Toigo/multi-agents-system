@@ -221,3 +221,11 @@ __marimo__/
 
 Presentation1_FOUSSET_TOIGO.pdf
 Sujets.pdf
+
+# Données SQLite des microservices
+*/data/
+*.db
+
+# Cache Python
+__pycache__/
+*.pyc

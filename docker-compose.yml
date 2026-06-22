@@ -55,3 +55,67 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+  frontend-service:
+    build: ./frontend-service
+    container_name: frontend-service
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    depends_on:
+      - stock-service
+      - production-service
+      - order-service
+      - machine-service
+
+  agent-service:
+    build: ./agent-service
+    container_name: agent-service
+    ports:
+      - "8005:8000"
+    environment:
+      # Fournisseur LLM : azure (défaut) ou openai
+      - LLM_PROVIDER=${LLM_PROVIDER:-azure}
+      # Azure OpenAI / AI Foundry
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT:-gpt-5.2}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION:-2024-05-01-preview}
+      # Azure Content Safety
+      - CONTENT_SAFETY_ENABLED=${CONTENT_SAFETY_ENABLED:-false}
+      - AZURE_CONTENT_SAFETY_KEY=${AZURE_CONTENT_SAFETY_KEY}
+      - AZURE_CONTENT_SAFETY_ENDPOINT=${AZURE_CONTENT_SAFETY_ENDPOINT}
+      - CONTENT_SAFETY_THRESHOLD=${CONTENT_SAFETY_THRESHOLD:-4}
+      # URLs des microservices
+      - STOCK_SERVICE_URL=http://stock-service:8000
+      - PRODUCTION_SERVICE_URL=http://production-service:8000
+      - ORDER_SERVICE_URL=http://order-service:8000
+      - MACHINE_SERVICE_URL=http://machine-service:8000
+      - RAG_SERVICE_URL=http://rag-service:8000
+    restart: unless-stopped
+    depends_on:
+      - stock-service
+      - production-service
+      - order-service
+      - machine-service
+      - rag-service
+
+  rag-service:
+    build: ./rag-service
+    container_name: rag-service
+    ports:
+      - "8006:8000"
+    environment:
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION:-2024-05-01-preview}
+      - AZURE_EMBEDDING_DEPLOYMENT=${AZURE_EMBEDDING_DEPLOYMENT:-text-embedding-3-small}
+    volumes:
+      - ./rag-service/data/chroma:/app/data/chroma
+      - ./rag-service/docs:/app/docs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
