@@ -40,7 +40,6 @@ L'architecture repose sur des communications asynchrones via des requêtes HTTP 
 ### Prérequis
 - [Docker](https://docs.docker.com/get-docker/) et Docker Compose installés.
 - Une clé d'API Azure OpenAI valide.
-- Python 3.10+ installé sur votre machine hôte (si vous souhaitez lancer le script d'amorçage).
 
 ### Étape 1 : Configuration de l'environnement
 1. À la racine du projet, vous trouverez un fichier `.env`.
@@ -62,13 +61,6 @@ Cette commande va télécharger les dépendances, construire les 7 conteneurs et
 
 *(Le premier lancement peut prendre quelques minutes le temps que l'indexation ChromaDB du RAG se fasse).*
 
-### Étape 3 : Amorçage des données (Optionnel mais recommandé)
-Pour ne pas vous retrouver avec des tableaux de bord vides, un script Python est fourni pour pré-remplir les bases de données avec un jeu de données de test cohérent.
-Dans le même terminal, exécutez :
-```bash
-python seed_data.py
-```
-*Note : Assurez-vous d'avoir démarré les conteneurs au préalable.*
 
 ### Étape 4 : Accéder à l'application
 Ouvrez votre navigateur web et rendez-vous à l'adresse suivante :
