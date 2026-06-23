@@ -79,3 +79,28 @@
 - Filtres à air : mensuel
 - Huile hydraulique : annuel (ISO VG 46)
 - Joints d'étanchéité des vérins : selon usure (inspection mensuelle)
+
+---
+
+## Machine 4 : Imprimeuses (Couleur Gamma, Laser Epsilon, Noir & Blanc Delta)
+
+### Maintenance préventive quotidienne
+- Vérifier les niveaux d'encre (CMJN ou Noir) dans les réservoirs principaux
+- Lancer un cycle de nettoyage des têtes d'impression automatique en début de journée
+- Contrôler l'alignement et la tension du support carton
+- Dépoussiérer la zone de sortie pour éviter les taches sur l'impression
+
+### Maintenance hebdomadaire
+- Nettoyage manuel approfondi des buses d'encre avec solvant recommandé
+- Vérification des filtres d'encre et remplacement si colmatage
+- Calibration des couleurs (profil ICC) sur un carton test
+- Graissage des chariots de têtes d'impression
+
+### Pannes fréquentes et résolutions
+**Problème** : Bandes ou lignes blanches sur l'impression
+**Cause** : Buses bouchées ou encrassées
+**Solution** : Lancer un nettoyage profond (Deep Clean). Si persistant, nettoyer manuellement les têtes avec le solvant.
+
+**Problème** : Couleurs délavées ou incorrectes
+**Cause** : Mauvaise calibration ou niveau d'encre critique non détecté
+**Solution** : Effectuer une nouvelle calibration avec le spectrophotomètre et vérifier manuellement les réservoirs.
